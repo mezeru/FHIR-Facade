@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
 var patients []Patient
-var id = 0
 
 func getPatient(res http.ResponseWriter, req *http.Request) {
 
@@ -28,11 +28,14 @@ func addPatient(res http.ResponseWriter, req *http.Request) {
 	var patient Patient
 
 	json.NewDecoder(req.Body).Decode(&patient)
-	patient.Id = id
-	id++
+
+	patient.Id = len(patients) + 1
+
 	patients = append(patients, patient)
 
 	result, err := json.Marshal(patient)
+
+	fmt.Println(patient)
 
 	if err == nil {
 		res.Write(result)
