@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -34,8 +33,6 @@ func addPatient(res http.ResponseWriter, req *http.Request) {
 	patients = append(patients, patient)
 
 	result, err := json.Marshal(patient)
-
-	fmt.Println(patient)
 
 	if err == nil {
 		res.Write(result)

@@ -14,6 +14,7 @@ type Patient struct {
 	Active     bool         `json:"active,omitempty"`
 	Deceased   Deceased     `json:"deceased,omitempty"`
 	Address    []Address    `json:"address,omitempty"`
+	Contact    []Contact    `json:"contact,omitempty"`
 }
 
 type Name struct {
@@ -47,4 +48,14 @@ type Address struct {
 	Postalcode string `json:"postalcode,omitempty"`
 	Country    string `json:"country,,omitempty"`
 	Period     string `json:"period,omitempty"`
+}
+
+type Contact struct {
+	Relationship string    `json:"relationship,omitempty"`
+	Name         []Name    `json:"name,omitempty"`
+	Telecom      []Telecom `json:"telecom,omitempty"`
+	Address      []Address `json:"address,omitempty"`
+	Gender       string    `json:"gender,omitempty"`
+	Organization string    `json:"organization,omitempty"`
+	Period       string    `json:"period,omitempty"`
 }
