@@ -9,9 +9,13 @@ import (
 	"gorm.io/gorm"
 )
 
+var PgDataBase gorm.DB
+
 func Connect2Pg() {
 	dsn := "host=localhost user=fhir password=fhir dbname=fhir port=5433 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	PgDataBase = *db
 
 	if err != nil {
 		log.Fatal(err)
@@ -19,6 +23,6 @@ func Connect2Pg() {
 		fmt.Println("Successfully connected to db")
 	}
 
-	db.AutoMigrate(&Patient{})
+	db.AutoMigrate(&Patient{}, &Telecom{}, &Address{}, &Name{}, &Deceased{}, &Contact{})
 
 }

@@ -4,16 +4,19 @@ import (
 	"encoding/json"
 	"net/http"
 
+	uuid "github.com/google/uuid"
 	"github.com/mezeru/FHIR-Facade/src/db"
 )
 
-var patients []db.Patient
-
 func getPatient(res http.ResponseWriter, req *http.Request) {
+
+	var patient []db.Patient
 
 	res.Header().Set("Content-type", "application/json")
 
-	result, err := json.Marshal(patients)
+	db.PgDataBase.Find(&patient)
+
+	result, err := json.Marshal(patient)
 
 	if err == nil {
 		res.Write(result)
@@ -30,17 +33,20 @@ func addPatient(res http.ResponseWriter, req *http.Request) {
 
 	json.NewDecoder(req.Body).Decode(&patient)
 
-	patient.Id = "23"
+	output, err := json.Marshal(patient)
 
-	patients = append(patients, patient)
+	u := uuid.New()
 
-	result, err := json.Marshal(patient)
+	patient.Id = u.String()
 
 	if err == nil {
-		res.Write(result)
+		res.Write(output)
 		res.WriteHeader(http.StatusOK)
 	} else {
 
 		res.Write([]byte(err.Error()))
 	}
+
+	db.PgDataBase.Create(&patient)
+
 }
