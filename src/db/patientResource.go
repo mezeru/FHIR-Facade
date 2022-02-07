@@ -1,13 +1,17 @@
-package main
+package db
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Patient struct {
-	Id         int          `json:"id"`
+	gorm.Model
+
+	Id         string       `json:"id" gorm:"unique_index"`
 	Identifier []Identifier `json:"identifier,omitempty"`
-	Name       []Name       `json:"name,omitempty"`
+	Name       []Name       `json:"name,omitempty" validate:"required"`
 	Gender     string       `json:"gender,omitempty"`
 	BirthDate  string       `json:"birthDate,omitempty"`
 	Telecom    []Telecom    `json:"telecom,omitempty"`
@@ -18,26 +22,36 @@ type Patient struct {
 }
 
 type Name struct {
+	gorm.Model
+
 	Given  string `json:"given,omitempty"`
 	Use    string `json:"use,omitempty"`
 	Family string `json:"family,omitempty"`
 }
 
 type Telecom struct {
+	gorm.Model
+
 	Value int    `json:"value,omitempty"`
 	Use   string `json:"use,omitempty"`
 }
 
 type Identifier struct {
+	gorm.Model
+
 	Value string `json:"value,omitempty"`
 }
 
 type Deceased struct {
+	gorm.Model
+
 	DeceasedBoolean  bool      `json:"deceasedBoolean,omitempty"`
 	DeceasedDateTime time.Time `json:"deceasedDateTime,omitempty"`
 }
 
 type Address struct {
+	gorm.Model
+
 	Use        string `json:"use,omitempty"`
 	Type       string `json:"type,omitempty"`
 	Text       string `json:"text,omitempty"`
@@ -51,6 +65,8 @@ type Address struct {
 }
 
 type Contact struct {
+	gorm.Model
+
 	Relationship string    `json:"relationship,omitempty"`
 	Name         []Name    `json:"name,omitempty"`
 	Telecom      []Telecom `json:"telecom,omitempty"`

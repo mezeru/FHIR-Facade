@@ -3,9 +3,11 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+
+	"github.com/mezeru/FHIR-Facade/src/db"
 )
 
-var patients []Patient
+var patients []db.Patient
 
 func getPatient(res http.ResponseWriter, req *http.Request) {
 
@@ -24,11 +26,11 @@ func getPatient(res http.ResponseWriter, req *http.Request) {
 
 func addPatient(res http.ResponseWriter, req *http.Request) {
 
-	var patient Patient
+	var patient db.Patient
 
 	json.NewDecoder(req.Body).Decode(&patient)
 
-	patient.Id = len(patients) + 1
+	patient.Id = "23"
 
 	patients = append(patients, patient)
 
@@ -41,5 +43,4 @@ func addPatient(res http.ResponseWriter, req *http.Request) {
 
 		res.Write([]byte(err.Error()))
 	}
-
 }
