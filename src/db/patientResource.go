@@ -10,15 +10,15 @@ type Patient struct {
 	gorm.Model
 
 	Id         string       `json:"id" gorm:"unique_index"`
-	Identifier []Identifier `json:"identifier,omitempty"`
-	Name       []Name       `json:"name,omitempty" validate:"required"`
+	Identifier []Identifier `json:"identifier,omitempty" gorm:"foreignKey:Value"`
+	Name       []Name       `json:"name,omitempty" gorm:"foreignKey:Given"`
 	Gender     string       `json:"gender,omitempty"`
 	BirthDate  string       `json:"birthDate,omitempty"`
-	Telecom    []Telecom    `json:"telecom,omitempty"`
+	Telecoms   []Telecom    `json:"telecom,omitempty" gorm:"foreignKey:Value"`
 	Active     bool         `json:"active,omitempty"`
-	Deceased   Deceased     `json:"deceased,omitempty"`
-	Address    []Address    `json:"address,omitempty"`
-	Contact    []Contact    `json:"contact,omitempty"`
+	Deceased   Deceased     `json:"deceased,omitempty" gorm:"foreignKey:DeceasedBoolean"`
+	Addressess []Address    `json:"address,omitempty" gorm:"foreignKey:Use"`
+	Contacts   []Contact    `json:"contact,omitempty" gorm:"foreignKey:Relationship"`
 }
 
 type Name struct {
@@ -68,9 +68,9 @@ type Contact struct {
 	gorm.Model
 
 	Relationship string    `json:"relationship,omitempty"`
-	Name         []Name    `json:"name,omitempty"`
-	Telecom      []Telecom `json:"telecom,omitempty"`
-	Address      []Address `json:"address,omitempty"`
+	Name         []Name    `json:"name,omitempty" gorm:"foreignKey:Given"`
+	Telecom      []Telecom `json:"telecom,omitempty" gorm:"foreignKey:Value"`
+	Address      []Address `json:"address,omitempty" gorm:"foreignKey:Use"`
 	Gender       string    `json:"gender,omitempty"`
 	Organization string    `json:"organization,omitempty"`
 	Period       string    `json:"period,omitempty"`

@@ -16,8 +16,9 @@ func Connect2Pg() {
 	if err != nil {
 		log.Fatal(err)
 	} else {
-		fmt.Printf("Successfully connected to db")
+		fmt.Println("Successfully connected to db")
 	}
+
 	db.AutoMigrate(&Patient{})
 
 }

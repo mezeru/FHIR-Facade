@@ -21,8 +21,7 @@ func main() {
 	// router.HandleFunc("/Patient", deletePatient).Methods("DELETE")
 
 	log.Println("Serving Listing at ", port)
-	log.Fatal(http.ListenAndServe(port, router))
-
 	db.Connect2Pg()
+	log.Fatal(http.ListenAndServe(port, router))
 
 }
