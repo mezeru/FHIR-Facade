@@ -14,7 +14,7 @@ func getPatient(res http.ResponseWriter, req *http.Request) {
 
 	res.Header().Set("Content-type", "application/json")
 
-	db.PgDataBase.Find(&patient)
+	db.PgDataBase.Select("id", "gender", "birthDate").Find(&patient)
 
 	result, err := json.Marshal(patient)
 
@@ -37,7 +37,7 @@ func addPatient(res http.ResponseWriter, req *http.Request) {
 
 	u := uuid.New()
 
-	patient.Id = u.String()
+	patient.ID = u.String()
 
 	if err == nil {
 		res.Write(output)

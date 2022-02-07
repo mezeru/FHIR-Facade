@@ -23,6 +23,6 @@ func Connect2Pg() {
 		fmt.Println("Successfully connected to db")
 	}
 
-	db.AutoMigrate(&Patient{}, &Telecom{}, &Address{}, &Name{}, &Deceased{}, &Contact{})
+	db.AutoMigrate(&Patient{}, &Name{}, &Identifier{}, &Telecom{})
 
 }
